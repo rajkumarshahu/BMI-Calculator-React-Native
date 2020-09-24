@@ -11,40 +11,36 @@ import {
 } from 'react-native';
 
 function ImperialUnitScreen () {
-    const [weight, setWeight] = useState('');
-    const [height, setHeight] = useState('');
-    const [bmiCategory, setBmiCategory] = useState('');
-    const inputWeight = useRef();
-    const inputHeight = useRef();
+  const [weight, setWeight] = useState('');
+	const [height, setHeight] = useState('');
+	const [bmi, setBmi] = useState('');
+	const [bmiCategory, setBmiCategory] = useState('');
+	const inputWeight = useRef();
+	const inputHeight = useRef();
 
-    const [bmi, setBmi] = useState('');
+	const getBMICategories = () => {
+		let userBMI = weight * 703 / Math.pow(height, 2);
+		setBmi(userBMI.toFixed(2));
+		if (userBMI < 18.5) {
+			setBmiCategory('You are underweight!');
+		} else if (userBMI >= 18.5 && userBMI <= 24.9) {
+			setBmiCategory('Your weight is normal!');
+		} else if (userBMI > 24.9 && userBMI <= 29.9) {
+			setBmiCategory('You are overweight!');
+		} else if (userBMI > 29.9) {
+			setBmiCategory('You are obese!');
+		} else {
+			setBmiCategory('Please');
+		}
+	};
 
-    const calculateBMIHandler = () => {
-      if(weight != '' && height !=''){
-        let userBMI = weight / Math.pow(height / 100, 2);
-        setBmi(userBMI.toFixed());
-        getBMICategories()
-      } else {
-        setBmi('Please enter your informations.')
-      }
-    };
-
-    const getBMICategories = () => {
-      let userBMI = weight / Math.pow(height / 100, 2);
-        setBmi(userBMI.toFixed());
-      if(userBMI < 18.5){
-        setBmiCategory('You are underweight!')
-      } else if (userBMI >= 18.5 && userBMI <= 24.9){
-        setBmiCategory('Your weight is normal!')
-      }else if (userBMI >= 25 && userBMI <= 29.9){
-        setBmiCategory('You are overweight!')
-      }else if (userBMI >= 30){
-          setBmiCategory('You are obese!')
-    }
-  }
-
-
-
+	const calculateBMIHandler = () => {
+		if (weight != '' && height != '') {
+			getBMICategories();
+		} else {
+			setBmi('Please enter your informations.');
+		}
+	};
 
     return (
       <View style={styles.container}>
@@ -53,14 +49,14 @@ function ImperialUnitScreen () {
         </View>
         <View >
         <View>
-        <Text style={{marginTop: 100}}>Enter your weight in Kilograms and Height in centimeters</Text>
+        <Text style={{marginTop: 100}}>Enter your weight in Pounds and Height in Inches</Text>
         </View>
         <View style={{marginTop: 20}}>
         <TextInput
             ref={inputWeight}
             clearTextOnFocus
             style={styles.textInputContainer}
-            placeholder="Weight in Kg"
+            placeholder="Weight in pounds"
             keyboardType="numeric"
             value={weight}
             onChangeText={(enteredWeight) => {
@@ -72,7 +68,7 @@ function ImperialUnitScreen () {
             ref={inputHeight}
             style={styles.textInputContainer}
             name="height"
-            placeholder="Height in CM"
+            placeholder="Height in inches"
             keyboardType="numeric"
             value={height}
             onChangeText={(enteredHeight) => {
@@ -83,11 +79,6 @@ function ImperialUnitScreen () {
 
         </View>
         <View style={styles.buttonContainer}>
-          <Button
-            color="#841584"
-            title="Calculate"
-            onPress={calculateBMIHandler}
-          />
           <TouchableOpacity>
             <Text style={styles.resultText} onPress={calculateBMIHandler}>Calculate</Text>
           </TouchableOpacity>
@@ -114,8 +105,9 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 	},
 	buttonContainer: {
-		backgroundColor: 'lightblue',
-		padding: 5,
+    backgroundColor: 'lightblue',
+    color: 'white',
+		padding: 15,
 		marginTop: 30,
 	},
 	textInputContainer: {

@@ -15,6 +15,7 @@ function SIUnitScreen() {
 	const inputWeight = useRef();
 	const inputHeight = useRef();
 
+	// Calculates and categorises BMI
 	const getBMICategories = () => {
 		let userBMI = weight / Math.pow(height / 100, 2);
 		setBmi(userBMI.toFixed(2));
@@ -31,6 +32,7 @@ function SIUnitScreen() {
 		}
 	};
 
+	// Handles BMI and BMI Categories
 	const calculateBMIHandler = () => {
 		if (weight != '' && height != '') {
 			getBMICategories();

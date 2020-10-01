@@ -15,6 +15,7 @@ function ImperialUnitScreen() {
 	const inputWeight = useRef();
 	const inputHeight = useRef();
 
+	// Calculates and categorises BMI
 	const getBMICategories = () => {
 		let userBMI = (weight * 703) / Math.pow(height, 2);
 		setBmi(userBMI.toFixed(2));
@@ -31,6 +32,7 @@ function ImperialUnitScreen() {
 		}
 	};
 
+	// Handles BMI and BMI Categories
 	const calculateBMIHandler = () => {
 		if (weight != '' && height != '') {
 			getBMICategories();

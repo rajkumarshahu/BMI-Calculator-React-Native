@@ -2,16 +2,13 @@ import React, { useState, useRef } from 'react';
 import {
 	Text,
 	View,
-    StyleSheet,
-    AppRegistry,
-  Button,
-  TouchableOpacity,
-	Alert,
+	StyleSheet,
+	TouchableOpacity,
 	TextInput,
 } from 'react-native';
 
-function ImperialUnitScreen () {
-  const [weight, setWeight] = useState('');
+function ImperialUnitScreen() {
+	const [weight, setWeight] = useState('');
 	const [height, setHeight] = useState('');
 	const [bmi, setBmi] = useState('');
 	const [bmiCategory, setBmiCategory] = useState('');
@@ -19,7 +16,7 @@ function ImperialUnitScreen () {
 	const inputHeight = useRef();
 
 	const getBMICategories = () => {
-		let userBMI = weight * 703 / Math.pow(height, 2);
+		let userBMI = (weight * 703) / Math.pow(height, 2);
 		setBmi(userBMI.toFixed(2));
 		if (userBMI < 18.5) {
 			setBmiCategory('You are underweight!');
@@ -30,7 +27,7 @@ function ImperialUnitScreen () {
 		} else if (userBMI > 29.9) {
 			setBmiCategory('You are obese!');
 		} else {
-			setBmiCategory('Please');
+			setBmiCategory('Please enter numeric value!!!');
 		}
 	};
 
@@ -42,55 +39,57 @@ function ImperialUnitScreen () {
 		}
 	};
 
-    return (
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.header}>BMI Calculator</Text>
-        </View>
-        <View >
-        <View>
-        <Text style={{marginTop: 100}}>Enter your weight in Pounds and Height in Inches</Text>
-        </View>
-        <View style={{marginTop: 20}}>
-        <TextInput
-            ref={inputWeight}
-            clearTextOnFocus
-            style={styles.textInputContainer}
-            placeholder="Weight in pounds"
-            keyboardType="numeric"
-            value={weight}
-            onChangeText={(enteredWeight) => {
-              setWeight(enteredWeight);
-            }}
-          />
+	return (
+		<View style={styles.container}>
+			<View>
+				<Text style={styles.header}>BMI Calculator</Text>
+			</View>
+			<View>
+				<View>
+					<Text style={{ marginTop: 50 }}>Enter your weight in Pounds</Text>
+				</View>
+				<View>
+					<TextInput
+						ref={inputWeight}
+						clearTextOnFocus
+						style={styles.textInputContainer}
+						placeholder='Weight in pounds'
+						keyboardType='numeric'
+						value={weight}
+						onChangeText={(enteredWeight) => {
+							setWeight(enteredWeight);
+						}}
+					/>
+					<View>
+						<Text>Enter your Height in Inches</Text>
+					</View>
 
-          <TextInput
-            ref={inputHeight}
-            style={styles.textInputContainer}
-            name="height"
-            placeholder="Height in inches"
-            keyboardType="numeric"
-            value={height}
-            onChangeText={(enteredHeight) => {
-              setHeight(enteredHeight);
-            }}
-          />
-        </View>
-
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity>
-            <Text style={styles.resultText} onPress={calculateBMIHandler}>Calculate</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.resultContainer}>
-          <Text style={styles.resultText}>Your BMI is:</Text>
-          <Text style={styles.resultText}>{bmi}</Text>
-          <Text style={styles.resultText}>Your BMI category is:</Text>
-          <Text style={styles.resultText}>{bmiCategory}</Text>
-        </View>
-      </View>
-    );
+					<TextInput
+						ref={inputHeight}
+						style={styles.textInputContainer}
+						name='height'
+						placeholder='Height in inches'
+						keyboardType='numeric'
+						value={height}
+						onChangeText={(enteredHeight) => {
+							setHeight(enteredHeight);
+						}}
+					/>
+				</View>
+			</View>
+			<View style={styles.buttonContainer}>
+				<TouchableOpacity style={styles.button} onPress={calculateBMIHandler}>
+					<Text style={{ color: '#f4ebc1', fontSize: 20 }}>Calculate</Text>
+				</TouchableOpacity>
+			</View>
+			<View style={styles.resultContainer}>
+				<Text style={styles.resultText}>Your BMI is:</Text>
+				<Text style={styles.resultText}>{bmi}</Text>
+				<Text style={styles.resultText}>Your BMI category is:</Text>
+				<Text style={styles.resultText}>{bmiCategory}</Text>
+			</View>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
@@ -98,17 +97,19 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		flexWrap: 'wrap',
-		margin: 70,
+		backgroundColor: '#ebd4d4',
 	},
 	header: {
-		fontSize: 20,
+		fontSize: 30,
+		alignSelf: 'center',
+		fontWeight: 'bold',
 	},
-	buttonContainer: {
-    backgroundColor: 'lightblue',
-    color: 'white',
-		padding: 15,
-		marginTop: 30,
+	button: {
+		marginTop: 20,
+		zIndex: 1,
+		alignItems: 'center',
+		backgroundColor: '#709fb0',
+		padding: 10,
 	},
 	textInputContainer: {
 		margin: 10,
@@ -118,10 +119,13 @@ const styles = StyleSheet.create({
 	},
 	resultContainer: {
 		margin: 10,
-		padding: 20,
+		borderWidth: 2,
+		padding: 10,
+		backgroundColor: '#e7e7de',
+		marginTop: 30,
 	},
 	resultText: {
-		fontSize: 15,
+		fontSize: 20,
 		textAlign: 'center',
 	},
 });

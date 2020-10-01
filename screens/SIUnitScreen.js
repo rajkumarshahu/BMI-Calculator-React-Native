@@ -3,9 +3,7 @@ import {
 	Text,
 	View,
 	StyleSheet,
-	Button,
 	TouchableOpacity,
-	Alert,
 	TextInput,
 } from 'react-native';
 
@@ -15,9 +13,9 @@ function SIUnitScreen() {
 	const [bmi, setBmi] = useState('');
 	const [bmiCategory, setBmiCategory] = useState('');
 	const inputWeight = useRef();
-  const inputHeight = useRef();
+	const inputHeight = useRef();
 
-  const getBMICategories = () => {
+	const getBMICategories = () => {
 		let userBMI = weight / Math.pow(height / 100, 2);
 		setBmi(userBMI.toFixed(2));
 		if (userBMI < 18.5) {
@@ -29,7 +27,7 @@ function SIUnitScreen() {
 		} else if (userBMI > 29.9) {
 			setBmiCategory('You are obese!');
 		} else {
-			setBmiCategory('Please');
+			setBmiCategory('Please enter numeric value!!!');
 		}
 	};
 
@@ -41,8 +39,6 @@ function SIUnitScreen() {
 		}
 	};
 
-
-
 	return (
 		<View style={styles.container}>
 			<View>
@@ -50,11 +46,9 @@ function SIUnitScreen() {
 			</View>
 			<View>
 				<View>
-					<Text style={{ marginTop: 100 }}>
-						Enter your weight in Kilograms and Height in centimeters
-					</Text>
+					<Text style={{ marginTop: 50 }}>Enter your weight in Kilograms</Text>
 				</View>
-				<View style={{ marginTop: 20 }}>
+				<View>
 					<TextInput
 						ref={inputWeight}
 						clearTextOnFocus
@@ -66,7 +60,9 @@ function SIUnitScreen() {
 							setWeight(enteredWeight);
 						}}
 					/>
-
+					<View>
+						<Text>Enter your Height in Centimeters</Text>
+					</View>
 					<TextInput
 						ref={inputHeight}
 						clearTextOnFocus
@@ -82,10 +78,8 @@ function SIUnitScreen() {
 				</View>
 			</View>
 			<View style={styles.buttonContainer}>
-				<TouchableOpacity>
-					<Text style={styles.resultText} onPress={calculateBMIHandler}>
-						Calculate
-					</Text>
+				<TouchableOpacity style={styles.button} onPress={calculateBMIHandler}>
+					<Text style={{ color: '#f4ebc1', fontSize: 20 }}>Calculate</Text>
 				</TouchableOpacity>
 			</View>
 			<View style={styles.resultContainer}>
@@ -103,16 +97,19 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		flexWrap: 'wrap',
-		margin: 70,
+		backgroundColor: '#f4ebc1',
 	},
 	header: {
-		fontSize: 20,
+		fontSize: 30,
+		alignSelf: 'center',
+		fontWeight: 'bold',
 	},
-	buttonContainer: {
-		backgroundColor: 'lightblue',
-		padding: 5,
-		marginTop: 30,
+	button: {
+		marginTop: 20,
+		zIndex: 1,
+		alignItems: 'center',
+		backgroundColor: '#709fb0',
+		padding: 10,
 	},
 	textInputContainer: {
 		margin: 10,
@@ -122,10 +119,13 @@ const styles = StyleSheet.create({
 	},
 	resultContainer: {
 		margin: 10,
-		padding: 20,
+		borderWidth: 2,
+		padding: 10,
+		backgroundColor: '#e7e7de',
+		marginTop: 30,
 	},
 	resultText: {
-		fontSize: 15,
+		fontSize: 20,
 		textAlign: 'center',
 	},
 });
